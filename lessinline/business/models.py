@@ -22,7 +22,7 @@ class Business(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     description = models.TextField(blank=True, null=True)
 
-    staffs = models.ManyToManyField(settings.AUTH_USER_MODEL, through='BusinessStaff')
+    staffs = models.ManyToManyField(settings.AUTH_USER_MODEL, through='BusinessStaff', blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

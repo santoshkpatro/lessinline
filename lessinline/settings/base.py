@@ -21,6 +21,8 @@ INSTALLED_APPS = [
     # Local Apps
     'lessinline.accounts',
     'lessinline.business',
+    'lessinline.services',
+    'lessinline.bookings',
 ]
 
 MIDDLEWARE = [
