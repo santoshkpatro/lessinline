@@ -1,6 +1,6 @@
 import uuid
 import shortuuid
-from django.db import models
+from django.db import models, transaction,  DatabaseError, IntegrityError
 from django.contrib.auth.models import AbstractBaseUser
 from .managers import UserManager, ActiveUserManager
 
@@ -77,8 +77,8 @@ class User(AbstractBaseUser):
 
 class Account(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    account_number = models.CharField(max_length=12, blank=True)
     user = models.OneToOneField(User, on_delete=models.PROTECT)
+    account_number = models.CharField(max_length=12, blank=True, unique=True, editable=False)
 
     balance = models.PositiveIntegerField(default=0)
 
@@ -95,3 +95,12 @@ class Account(models.Model):
         if not self.account_number:
             self.account_number = shortuuid.ShortUUID().random(length=10).upper()
         return super().save(*args, **kwargs)
+
+    @transaction.atomic
+    def deposit(self, amount: float):
+        try:
+            with transaction.atomic():
+                self.balance += amount
+                self.save()
+        except IntegrityError:
+            raise 'Database error'
