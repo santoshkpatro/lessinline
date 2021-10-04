@@ -22,8 +22,6 @@ class Business(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     description = models.TextField(blank=True, null=True)
 
-    staffs = models.ManyToManyField(settings.AUTH_USER_MODEL, through='BusinessStaff', blank=True)
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -36,7 +34,7 @@ class Business(models.Model):
 
 class BusinessStaff(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    business = models.ForeignKey(Business, on_delete=models.CASCADE)
+    business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name='staffs')
     staff = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     created_at = models.DateTimeField(auto_now_add=True)

@@ -43,6 +43,8 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(read_only=True)
+
     class Meta:
         model = User
         fields = ['email', 'first_name', 'last_name', 'phone', 'avatar', 'gender', 'date_of_birth']
