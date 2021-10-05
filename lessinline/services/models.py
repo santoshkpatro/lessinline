@@ -5,7 +5,7 @@ from lessinline.business.models import Business
 
 class Service(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    business = models.ForeignKey(Business, on_delete=models.CASCADE)
+    business = models.ForeignKey(Business, on_delete=models.CASCADE, related_name='services')
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0)
@@ -24,7 +24,7 @@ class Service(models.Model):
 
 class Slot(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, on_delete=models.CASCADE, related_name='slots')
     start_time = models.TimeField()
     end_time = models.TimeField(blank=True, null=True)
     capacity = models.PositiveIntegerField(blank=True, null=True)
