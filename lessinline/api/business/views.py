@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions
-from lessinline.api.business.serializers import BusinessSerializer
-from lessinline.business.models import Business
-from .permissions import IsOwner
+from lessinline.api.business.serializers import BusinessSerializer, BusinessStaffSerializer
+from lessinline.business.models import Business, BusinessStaff
+from .permissions import IsOwner, IsBusinessOwner
 
 
 class BusinessList(generics.ListCreateAPIView):
@@ -22,3 +22,9 @@ class BusinessDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = BusinessSerializer
     queryset = Business.objects.all()
     permission_classes = [permissions.IsAuthenticated, IsOwner]
+
+
+class BusinessStaffDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = BusinessStaffSerializer
+    queryset = BusinessStaff.objects.all()
+    permission_classes = [permissions.IsAuthenticated, IsBusinessOwner]
