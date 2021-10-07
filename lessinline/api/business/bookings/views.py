@@ -2,6 +2,7 @@ from rest_framework import generics, permissions
 from lessinline.api.business.mixins import ServiceLookupMixins
 from lessinline.bookings.models import Booking
 from .serializers import BookingSerializer
+from .permissions import IsBookingServiceOwner
 
 
 class BookingsList(ServiceLookupMixins, generics.ListAPIView):
@@ -16,3 +17,9 @@ class BookingsList(ServiceLookupMixins, generics.ListAPIView):
     def list(self, request, *args, **kwargs):
         self.get_service()
         return super().list(request, *args, **kwargs)
+
+
+class BookingDetail(generics.RetrieveAPIView):
+    serializer_class = BookingSerializer
+    queryset = Booking.objects.all()
+    permission_classes = [permissions.IsAuthenticated, IsBookingServiceOwner]
