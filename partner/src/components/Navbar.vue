@@ -26,7 +26,9 @@
                         >
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                        <router-link class="nav-link" :to="{ name: 'Overview' }"
+                            >Dashboard</router-link
+                        >
                     </li>
                 </ul>
                 <ul class="navbar-nav">

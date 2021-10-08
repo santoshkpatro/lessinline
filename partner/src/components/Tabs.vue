@@ -20,14 +20,13 @@
             <li class="nav-item">
                 <select
                     class="form-select"
-                    aria-label="Default select example"
-                    v-model="selected"
-                    @change="handleBusiness"
+                    v-model="choosenBusiness"
+                    @change="handleSelectBusiness(this.value)"
                 >
                     <option
+                        :value="business"
                         v-for="business in businesses"
                         :key="business.id"
-                        :value="business"
                     >
                         {{ business.name }}
                     </option>
@@ -38,28 +37,20 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { API } from '../common'
+import { mapGetters } from 'vuex'
 
 export default {
+    computed: {
+        ...mapGetters(['businesses', 'selectedBusiness']),
+    },
     data() {
         return {
-            selected: null,
-            businesses: [],
+            choosenBusiness: null,
         }
     },
-    mounted() {
-        axios
-            .get(`${API}/business`)
-            .then(({ data }) => {
-                this.selected = data[0]
-                this.businesses = data
-            })
-            .catch((e) => console.log(data))
-    },
     methods: {
-        handleBusiness(event) {
-            this.$store.dispatch('selectBusiness', this.selected)
+        handleSelectBusiness(event) {
+            this.$store.dispatch('selectBusiness', this.choosenBusiness)
         },
     },
 }

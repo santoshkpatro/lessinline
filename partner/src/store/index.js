@@ -4,7 +4,8 @@ import axios from 'axios'
 export default createStore({
     state: {
         user: null,
-        business: null,
+        businesses: [],
+        selectedBusiness: null,
     },
     mutations: {
         SET_USER_DATA(state, userData) {
@@ -19,7 +20,10 @@ export default createStore({
             location.reload()
         },
         SET_BUSINESS(state, business) {
-            state.business = business
+            state.selectedBusiness = business
+        },
+        SET_BUSINESSES(state, businesses) {
+            state.businesses = businesses
         },
     },
     actions: {
@@ -39,6 +43,9 @@ export default createStore({
         selectBusiness({ commit }, business) {
             commit('SET_BUSINESS', business)
         },
+        selectBusinesses({ commit }, businesses) {
+            commit('SET_BUSINESSES', businesses)
+        },
     },
     modules: {},
     getters: {
@@ -49,7 +56,10 @@ export default createStore({
             return state.user
         },
         selectedBusiness(state) {
-            return state.business
+            return state.selectedBusiness
+        },
+        businesses(state) {
+            return state.businesses
         },
     },
 })
