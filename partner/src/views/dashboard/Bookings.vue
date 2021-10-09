@@ -20,6 +20,13 @@
                                 <div class="col-8">
                                     <p>User Details</p>
                                     Name: {{ booking.user.first_name }}
+                                    <div>
+                                        <p>
+                                            Slot
+                                            {{ booking.slot.start_time }}
+                                            {{ booking.slot.end_time }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -34,6 +41,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import ServiceList from '@/components/dashboard/ServiceList'
 import axios from 'axios'
 import { API } from '@/common'
@@ -41,6 +49,9 @@ import { API } from '@/common'
 export default {
     components: {
         ServiceList,
+    },
+    computed: {
+        ...mapGetters(['selectedBusiness']),
     },
     data() {
         return {
@@ -50,8 +61,13 @@ export default {
     },
     methods: {
         handleSelectService(service) {
-            this.service = service
-            this.fetchBookings()
+            if (service == null) {
+                this.service = null
+                this.bookings = null
+            } else {
+                this.service = service
+                this.fetchBookings()
+            }
         },
         fetchBookings() {
             if (this.service !== null) {
