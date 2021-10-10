@@ -4,7 +4,7 @@
             <div class="col-9">
                 <div>
                     <div
-                        class="card"
+                        class="card my-1"
                         v-for="booking in bookings"
                         :key="booking.ID"
                     >
@@ -86,6 +86,11 @@ export default {
     },
     mounted() {
         this.fetchBookings()
+    },
+    watch: {
+        selectedBusiness: function (newBusiness, oldBusiness) {
+            this.bookings = []
+        },
     },
 }
 </script>

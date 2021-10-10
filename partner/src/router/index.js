@@ -35,6 +35,12 @@ const routes = [
                 component: () => import('../views/dashboard/Bookings.vue'),
                 meta: { requiresAuth: true },
             },
+            {
+                path: 'services',
+                name: 'Services',
+                component: () => import('../views/dashboard/Services.vue'),
+                meta: { requiresAuth: true },
+            },
         ],
     },
 ]
