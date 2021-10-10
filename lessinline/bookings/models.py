@@ -55,4 +55,4 @@ class Booking(models.Model):
         db_table = 'bookings'
 
     def __str__(self) -> str:
-        return 'Booking for ' + self.service.name
+        return str(self.id)

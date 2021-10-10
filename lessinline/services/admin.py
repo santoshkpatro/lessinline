@@ -9,5 +9,5 @@ class SlotAdmin(admin.TabularInline):
 
 @admin.register(Service)
 class ServiceAdmin(admin.ModelAdmin):
-    list_display = ['business', 'name', 'price', 'is_open']
+    list_display = ['name', 'business', 'price', 'is_open']
     inlines = [SlotAdmin]
